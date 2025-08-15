@@ -13,7 +13,7 @@
   justify-content: center;
   text-align: center;
 }
-.error {
+.error-message {
   color: red;
   margin-top: 12px;
 }

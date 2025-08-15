@@ -1,36 +1,44 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  // const records = [
-  //   { title: "勉強の記録1", time: 1 },
-  //   { title: "勉強の記録2", time: 3 },
-  //   { title: "勉強の記録3", time: 5 },
-  // ];
-
   const [titleText, setTitleText] = useState("");
-  const [timeText, setTimeText] = useState("0");
+  const [timeText, setTimeText] = useState(0);
   const [records, setRecords] = useState([]);
-  const [error, setError] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [sumTime, setSumTime] = useState();
   const isError = !titleText || !timeText;
 
   const changeTitleText = (e) => setTitleText(e.target.value);
   const changeTimeText = (e) => setTimeText(e.target.value);
+
   const addRecord = () => {
     const displayRecord = {
       title: titleText,
       time: timeText,
     };
     if (isError) {
-      setError("入力されていない項目があります");
+      setErrorMessage("入力されていない項目があります");
       return;
     }
-
     setRecords([...records, displayRecord]);
+
     setTitleText("");
-    setTimeText("0");
-    setError("");
+    setTimeText(0);
+    setErrorMessage("");
   };
+
+  useEffect(() => {
+    const timeArray = records.map((record) => record.time);
+
+    const initialValue = 0;
+    const sumStudyTime = timeArray.reduce(
+      (accumulator, currentValue) => accumulator + parseInt(currentValue),
+      initialValue
+    );
+    setSumTime(sumStudyTime);
+  }, [records]);
+
   return (
     <>
       <h1>学習記録一覧</h1>
@@ -48,7 +56,7 @@ function App() {
           登録
         </button>
       </div>
-      <div className="error"> {error}</div>
+      <div className="error-message"> {errorMessage}</div>
       <div>
         <p>入力されている学習内容：{titleText}</p>
         <p>学習内入力されている時間：{timeText}時間</p>
@@ -57,11 +65,13 @@ function App() {
       <div className="content-list">
         <p>学習記録リスト</p>
         <ul>
-          {records.map((record) => (
-            <li>{`${record.title} ${record.time}時間`}</li>
+          {records.map((record, index) => (
+            <li key={index}>{`${record.title} ${record.time}時間`}</li>
           ))}
         </ul>
       </div>
+
+      <p>合計時間：{sumTime}/1000</p>
     </>
   );
 }
