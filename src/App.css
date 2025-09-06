@@ -3,20 +3,16 @@
   margin: 0 auto;
 }
 
-
 .study-content {
   display: flex;
   align-items: center;
+  gap: 4px;
 }
 
 .add-button {
-  justify-content: center;
-  text-align: center;
+  margin-left: 85px;
 }
 .error-message {
   color: red;
   margin-top: 12px;
-}
-
-.content-list {
 }

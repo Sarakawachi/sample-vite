@@ -49,7 +49,7 @@ function App() {
         </div>
         <div className="study-content">
           <p>学習時間</p>
-          <input type="text" value={timeText} onChange={changeTimeText} />
+          <input type="number" value={timeText} onChange={changeTimeText} />
           <p>時間</p>
         </div>
         <button className="add-button" onClick={addRecord}>
@@ -63,7 +63,6 @@ function App() {
       </div>
 
       <div className="content-list">
-        <p>学習記録リスト</p>
         <ul>
           {records.map((record, index) => (
             <li key={index}>{`${record.title} ${record.time}時間`}</li>
